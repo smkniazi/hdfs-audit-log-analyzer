@@ -61,7 +61,7 @@ public class HdfsAuditLogReader {
     String allowedStr = getParameter(line, "[a-zA-Z]+", "allowed");
     boolean allowed = Boolean.parseBoolean(allowedStr);
 
-    if (cmd != null && src != null && HdfsOperation.isValidOperation(cmd)) {
+    if (cmd != null && src != null && HdfsOperation.isValidOperation(cmd) && allowed) {
       return new HdfsExecutedOperation(HdfsOperation.HdfsOperationName.valueOf(cmd), src, dst, allowed);
     }
     return null;

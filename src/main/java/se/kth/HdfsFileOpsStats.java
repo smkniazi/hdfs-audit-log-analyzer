@@ -46,15 +46,24 @@ public class HdfsFileOpsStats {
     if(remainder != 0){
       key += keyGranularity;
     }
-
     return new Long(key);
+  }
+
+  private String toHumanReadableFileSize(long sizeInBytes){
+    long key = getKey(sizeInBytes);
+
+    if(key <= 1 * 1024 * 1024){
+      return key/(1024)+"KB";
+    }else{
+      return key/(1024*1024)+"MB";
+    }
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    sb.append("FileSize").append(DELIMETER);
+    sb.append("FileSize(bytes)").append(DELIMETER).append("FileSize(KB/MB)").append(DELIMETER);
     for (HdfsOperation.HdfsOperationName op : HdfsOperation.getValidOpsSet()) {
       sb.append(op).append(DELIMETER);
     }
@@ -65,7 +74,8 @@ public class HdfsFileOpsStats {
 
     for (Long fileSize : sortedKeys) {
       Stat stat = stats.get(fileSize);
-      sb.append(fileSize).append(DELIMETER).append(stat).append("\n");
+      sb.append(fileSize).append(DELIMETER).append(toHumanReadableFileSize(fileSize)).append(DELIMETER).append(stat).append
+          ("\n");
     }
     return sb.toString();
   }

@@ -22,17 +22,12 @@ public class Progress {
   }
 
   public static synchronized void printPrgress() {
-    try {
       long time = System.currentTimeMillis() - lastPrintTime.get();
       if (time > PROGRESS_DURATION) {
         lastPrintTime.set(System.currentTimeMillis());
         String msg = "Successfull Ops: " + successfullOps.get() + " Failed Stats: " + failedOps.get() + "  Speed: " +
             (successfullOps.get() + failedOps.get()) / ((System.currentTimeMillis() - startTime) / 1000) + " ops/sec";
-//        System.out.write(msg.getBytes());
         System.out.println(msg);
-      }
-    } catch (Exception e) {
-
     }
   }
 }

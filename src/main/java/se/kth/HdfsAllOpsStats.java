@@ -27,9 +27,15 @@ public class HdfsAllOpsStats {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (HdfsOperation.HdfsOperationName opName : stats.keySet()) {
-      sb.append(opName).append("\n");
-      sb.append(stats.get(opName));
+    sb.append("OpName").append("FileOperations").append(DELIMETER).append("DirOps").append(DELIMETER).append("Total")
+        .append("\n");
+    for (HdfsOperation.HdfsOperationName opName : HdfsOperation.getValidOpsSet()) {
+      Stat stat = stats.get(opName);
+      if(stat != null){
+        sb.append(opName).append(DELIMETER).append(stats.get(opName)).append("\n");
+      }else{
+        sb.append(opName).append(DELIMETER).append(DELIMETER).append(DELIMETER).append("\n");
+      }
     }
     return sb.toString();
   }
@@ -57,12 +63,7 @@ public class HdfsAllOpsStats {
     @Override
     public String toString(){
       StringBuilder sb = new StringBuilder();
-      sb.append(DELIMETER).append(DELIMETER).append(DELIMETER).append("Total").append(DELIMETER).append
-          (fileOpsCount+dirOpsCount)
-          .append
-          ("\n");
-      sb.append(DELIMETER).append("FileOps").append(DELIMETER).append(fileOpsCount).append("\n");
-      sb.append(DELIMETER).append("DirOps").append(DELIMETER).append(dirOpsCount).append("\n");
+      sb.append(fileOpsCount).append(DELIMETER).append(dirOpsCount).append(DELIMETER).append(fileOpsCount+dirOpsCount);
       return sb.toString();
     }
   }
