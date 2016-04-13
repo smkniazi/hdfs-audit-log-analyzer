@@ -25,7 +25,8 @@ public class Progress {
       long time = System.currentTimeMillis() - lastPrintTime.get();
       if (time > PROGRESS_DURATION) {
         lastPrintTime.set(System.currentTimeMillis());
-        String msg = "Successfull Ops: " + successfullOps.get() + " Failed Stats: " + failedOps.get() + "  Speed: " +
+        String msg = "Successfull Stat Ops: " + successfullOps.get() + " Failed Stat Ops: " + failedOps.get() + "  " +
+            "Speed: " +
             (successfullOps.get() + failedOps.get()) / ((System.currentTimeMillis() - startTime) / 1000) + " ops/sec";
         System.out.println(msg);
     }

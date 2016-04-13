@@ -34,7 +34,8 @@ public class HdfsAllOpsStats {
       if(stat != null){
         sb.append(opName).append(DELIMETER).append(stats.get(opName)).append("\n");
       }else{
-        sb.append(opName).append(DELIMETER).append(DELIMETER).append(DELIMETER).append("\n");
+        sb.append(opName).append(DELIMETER).append("0").append(DELIMETER).append("0").append(DELIMETER).append("0")
+            .append("\n");
       }
     }
     return sb.toString();
