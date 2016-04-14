@@ -48,6 +48,9 @@ public class WebHdfsCommunicator implements Callable {
           }else{
             path = operation.getSrc();
           }
+          if(path == null){
+            continue;
+          }
           FileStatus fileStatus = client.getFileStatus(new Path(path));
           HdfsOperation.HdfsOperationType opType = HdfsOperation.HdfsOperationType.FileOp;
           if(fileStatus.isDirectory()){

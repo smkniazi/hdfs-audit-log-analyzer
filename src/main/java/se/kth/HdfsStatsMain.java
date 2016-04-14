@@ -23,8 +23,8 @@ public class HdfsStatsMain {
   private String webHdfsAddress = "webhdfs://localhost:5978";
   @Option(name = "-i", usage = "Dir/File path to HDFS audit log file(s). Default is ./logs")
   private String input = "./logs";
-  @Option(name = "-o", usage = "Output File Path.")
-  private String output = "./hdfs-stats.cvs";
+  @Option(name = "-o", usage = "Output File Path. Default ./hdfs-stats.csv")
+  private String output = "./hdfs-stats.csv";
 
 
   public static void main(String argv[]) throws Exception {

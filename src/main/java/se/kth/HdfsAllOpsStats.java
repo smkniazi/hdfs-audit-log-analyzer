@@ -27,7 +27,9 @@ public class HdfsAllOpsStats {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("OpName").append("FileOperations").append(DELIMETER).append("DirOps").append(DELIMETER).append("Total")
+    sb.append("OpName").append(DELIMETER).append("FileOperations").append(DELIMETER).append("DirOps").append
+        (DELIMETER).append
+        ("Total")
         .append("\n");
     for (HdfsOperation.HdfsOperationName opName : HdfsOperation.getValidOpsSet()) {
       Stat stat = stats.get(opName);

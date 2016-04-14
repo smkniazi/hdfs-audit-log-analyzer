@@ -57,7 +57,13 @@ public class HdfsAuditLogReader {
   private HdfsExecutedOperation parseHdfsAuditLogLine(final String line) {
     String cmd = getParameter(line, "[a-zA-Z]+", "cmd");
     String src = getParameter(line, "\\S+", "src");
+    if(src=="null"){
+      src=null;
+    }
     String dst = getParameter(line, "\\S+", "dst");
+    if(dst=="null"){
+      dst = null;
+    }
     String allowedStr = getParameter(line, "[a-zA-Z]+", "allowed");
     boolean allowed = Boolean.parseBoolean(allowedStr);
 

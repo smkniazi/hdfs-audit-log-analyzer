@@ -13,10 +13,10 @@ public class HdfsFileOpsStats {
   private final String DELIMETER = ";\t";
   private Map<Long, Stat> stats = new HashMap<Long, Stat>();
 
-  public void increment(HdfsOperation.HdfsOperationName opName, Long fileSize) {
+  public void increment(HdfsOperation.HdfsOperationName opName, Long fileSize, int depth) {
     long key = getKey(fileSize);
     Stat stat = getStatObj(key);
-    stat.increment(opName);
+    stat.increment(opName,depth);
   }
 
   private Stat getStatObj(Long key) {
@@ -64,6 +64,7 @@ public class HdfsFileOpsStats {
     StringBuilder sb = new StringBuilder();
 
     sb.append("FileSize(bytes)").append(DELIMETER).append("FileSize(KB/MB)").append(DELIMETER);
+    sb.append("Avg-Op-Depth").append(DELIMETER);
     for (HdfsOperation.HdfsOperationName op : HdfsOperation.getValidOpsSet()) {
       sb.append(op).append(DELIMETER);
     }
@@ -82,8 +83,9 @@ public class HdfsFileOpsStats {
 
   public class Stat {
     private Map<HdfsOperation.HdfsOperationName, Long> stats = new HashMap<HdfsOperation.HdfsOperationName, Long>();
+    private HdfsOperationDepthStat avgDepth = new HdfsOperationDepthStat();
 
-    public void increment(HdfsOperation.HdfsOperationName opName) {
+    public void increment(HdfsOperation.HdfsOperationName opName, int depth) {
       Long stat = stats.get(opName);
       if (stat == null) {
         stat = new Long(1);
@@ -92,11 +94,14 @@ public class HdfsFileOpsStats {
         stat = new Long(stat + 1);
         stats.put(opName, stat);
       }
+
+      avgDepth.addOperationDepth(depth);
     }
 
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder();
+      sb.append(avgDepth.getAverageOperationDepth()).append(DELIMETER);
       for (HdfsOperation.HdfsOperationName key : HdfsOperation.getValidOpsSet()) {
         Long count = stats.get(key);
         if (count == null) {

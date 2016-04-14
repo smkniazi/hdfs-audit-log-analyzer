@@ -24,7 +24,7 @@ public class HdfsStats {
       boolean isDirOp = opType == HdfsOperation.HdfsOperationType.DirOp;
       allStats.increment(opName, isDirOp);
       if (opType == HdfsOperation.HdfsOperationType.FileOp) {
-        fileStats.increment(opName, size);
+        fileStats.increment(opName, size,depth);
       }
     }
   }
