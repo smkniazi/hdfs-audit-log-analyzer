@@ -22,6 +22,7 @@ public class Progress {
   }
 
   public static synchronized void printPrgress() {
+    try{
       long time = System.currentTimeMillis() - lastPrintTime.get();
       if (time > PROGRESS_DURATION) {
         lastPrintTime.set(System.currentTimeMillis());
@@ -31,5 +32,7 @@ public class Progress {
             (successfullOps.get() + failedOps.get()) / ((System.currentTimeMillis() - startTime) / 1000) + " ops/sec";
         System.out.println(msg);
     }
+  }catch(ArithmeticException e){
+  }
   }
 }
