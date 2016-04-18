@@ -3,8 +3,7 @@ package se.kth;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -17,7 +16,7 @@ public class HdfsStatsMain {
   CmdLineParser parser;
   @Option(name = "-help", usage = "Print usages")
   private boolean help = false;
-  @Option(name = "-Threads", usage = "Number of threads. Default is 10")
+  @Option(name = "-t", usage = "Number of threads. Default is 10")
   private int threads = 10;
   @Option(name = "-webhdfs", usage = "Web HDFS address. Default is webhdfs://localhost:5978")
   private String webHdfsAddress = "webhdfs://localhost:5978";
@@ -43,7 +42,7 @@ public class HdfsStatsMain {
     es.invokeAll(workers);
     String output = hdfsStats.toString();
     System.out.println(hdfsStats.toString());
-    writeResults(output);
+    writeResults(hdfsStats);
     System.exit(0);
   }
 
@@ -69,9 +68,23 @@ public class HdfsStatsMain {
     System.out.println();
   }
 
-  private void writeResults(String msg) throws FileNotFoundException {
+  private void writeResults(HdfsStats stats) throws IOException {
+    writeBinaryFile(stats);
+    writeCSVResults(stats.toString());
+  }
+
+  private void writeCSVResults(String msg) throws FileNotFoundException {
     PrintWriter writer = new PrintWriter(output);
     writer.print(msg);
     writer.close();
+    System.out.println("Wrote "+output);
+  }
+
+  private void writeBinaryFile(HdfsStats stats) throws IOException {
+    FileOutputStream fos = new FileOutputStream(output+".bin");
+    ObjectOutputStream oos = new ObjectOutputStream(fos);
+    oos.writeObject(stats);
+    oos.close();
+    System.out.println("Wrote "+output+".bin");
   }
 }

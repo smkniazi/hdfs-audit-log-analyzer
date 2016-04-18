@@ -1,11 +1,12 @@
 package se.kth;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by salman on 2016-04-13.
  */
-public class HdfsOperationDepthStat {
+public class HdfsOperationDepthStat implements Serializable{
   private long count;
   private long sum;
 

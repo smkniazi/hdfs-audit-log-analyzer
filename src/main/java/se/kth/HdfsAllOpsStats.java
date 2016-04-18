@@ -1,12 +1,13 @@
 package se.kth;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by salman on 2016-04-12.
  */
-public class HdfsAllOpsStats {
+public class HdfsAllOpsStats implements Serializable{
   private final String DELIMETER = ";\t";
   private Map<HdfsOperation.HdfsOperationName, Stat> stats = new HashMap<HdfsOperation.HdfsOperationName, Stat>();
 
@@ -43,7 +44,7 @@ public class HdfsAllOpsStats {
     return sb.toString();
   }
 
-  private class Stat {
+  private class Stat implements Serializable{
     private int fileOpsCount;
     private int dirOpsCount;
 

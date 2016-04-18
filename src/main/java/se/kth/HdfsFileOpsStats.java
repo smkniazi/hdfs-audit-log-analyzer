@@ -1,5 +1,6 @@
 package se.kth;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -8,7 +9,7 @@ import java.util.TreeSet;
 /**
  * Created by salman on 2016-04-12.
  */
-public class HdfsFileOpsStats {
+public class HdfsFileOpsStats implements Serializable{
 
   private final String DELIMETER = ";\t";
   private Map<Long, Stat> stats = new HashMap<Long, Stat>();
@@ -81,7 +82,7 @@ public class HdfsFileOpsStats {
     return sb.toString();
   }
 
-  public class Stat {
+  public class Stat implements  Serializable{
     private Map<HdfsOperation.HdfsOperationName, Long> stats = new HashMap<HdfsOperation.HdfsOperationName, Long>();
     private HdfsOperationDepthStat avgDepth = new HdfsOperationDepthStat();
 

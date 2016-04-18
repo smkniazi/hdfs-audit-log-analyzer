@@ -1,9 +1,11 @@
 package se.kth;
 
+import java.io.Serializable;
+
 /**
  * Created by salman on 2016-04-12.
  */
-public class HdfsStats {
+public class HdfsStats implements Serializable{
   private final HdfsAllOpsStats allStats;
   private final HdfsFileOpsStats fileStats;
   private final HdfsAllOpsStats undeterminedOpsStats;
