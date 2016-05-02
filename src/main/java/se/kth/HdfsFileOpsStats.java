@@ -1,5 +1,7 @@
 package se.kth;
 
+import se.kth.mr.tools.ValidHdfsOperations;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ public class HdfsFileOpsStats implements Serializable{
   private final String DELIMETER = ";\t";
   private Map<Long, Stat> stats = new HashMap<Long, Stat>();
 
-  public void increment(HdfsOperation.HdfsOperationName opName, Long fileSize, int depth) {
+  public void increment(ValidHdfsOperations.HdfsOperationName opName, Long fileSize, int depth) {
     long key = getKey(fileSize);
     Stat stat = getStatObj(key);
     stat.increment(opName,depth);
@@ -66,7 +68,7 @@ public class HdfsFileOpsStats implements Serializable{
 
     sb.append("FileSize(bytes)").append(DELIMETER).append("FileSize(KB/MB)").append(DELIMETER);
     sb.append("Avg-Op-Depth").append(DELIMETER);
-    for (HdfsOperation.HdfsOperationName op : HdfsOperation.getValidOpsSet()) {
+    for (ValidHdfsOperations.HdfsOperationName op : ValidHdfsOperations.getValidOpsSet()) {
       sb.append(op).append(DELIMETER);
     }
     sb.append("\n");
@@ -83,10 +85,10 @@ public class HdfsFileOpsStats implements Serializable{
   }
 
   public class Stat implements  Serializable{
-    private Map<HdfsOperation.HdfsOperationName, Long> stats = new HashMap<HdfsOperation.HdfsOperationName, Long>();
+    private Map<ValidHdfsOperations.HdfsOperationName, Long> stats = new HashMap<ValidHdfsOperations.HdfsOperationName, Long>();
     private HdfsOperationDepthStat avgDepth = new HdfsOperationDepthStat();
 
-    public void increment(HdfsOperation.HdfsOperationName opName, int depth) {
+    public void increment(ValidHdfsOperations.HdfsOperationName opName, int depth) {
       Long stat = stats.get(opName);
       if (stat == null) {
         stat = new Long(1);
@@ -103,7 +105,7 @@ public class HdfsFileOpsStats implements Serializable{
     public String toString() {
       StringBuilder sb = new StringBuilder();
       sb.append(avgDepth.getAverageOperationDepth()).append(DELIMETER);
-      for (HdfsOperation.HdfsOperationName key : HdfsOperation.getValidOpsSet()) {
+      for (ValidHdfsOperations.HdfsOperationName key : ValidHdfsOperations.getValidOpsSet()) {
         Long count = stats.get(key);
         if (count == null) {
           count = new Long(0);

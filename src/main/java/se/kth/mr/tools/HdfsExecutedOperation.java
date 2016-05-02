@@ -1,16 +1,16 @@
-package se.kth;
+package se.kth.mr.tools;
 
 /**
  * Created by salman on 4/12/16.
  */
 public class HdfsExecutedOperation {
 
-  private final HdfsOperation.HdfsOperationName opName;
+  private final ValidHdfsOperations.HdfsOperationName opName;
   private final String src;
   private final String dst;
   private final boolean allowed;
 
-  public HdfsExecutedOperation(HdfsOperation.HdfsOperationName opName, String path, String dst, boolean allowed) {
+  public HdfsExecutedOperation(ValidHdfsOperations.HdfsOperationName opName, String path, String dst, boolean allowed) {
     this.opName = opName;
     this.src = path;
     this.dst = dst;
@@ -19,7 +19,7 @@ public class HdfsExecutedOperation {
 
 
 
-  public HdfsOperation.HdfsOperationName getOpName() {
+  public ValidHdfsOperations.HdfsOperationName getOpName() {
     return opName;
   }
 

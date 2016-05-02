@@ -5,6 +5,8 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.server.namenode.INode;
+import se.kth.mr.tools.HdfsExecutedOperation;
+import se.kth.mr.tools.ValidHdfsOperations;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -43,7 +45,7 @@ public class WebHdfsCommunicator implements Callable {
         if(operation != null){
 //          System.out.println("Thread ID: "+Thread.currentThread().getId()+" "+operation);
           path = null;
-          if(operation.getOpName() == HdfsOperation.HdfsOperationName.rename){
+          if(operation.getOpName() == ValidHdfsOperations.HdfsOperationName.rename){
             path = operation.getDst();
           }else{
             path = operation.getSrc();
@@ -52,9 +54,9 @@ public class WebHdfsCommunicator implements Callable {
             continue;
           }
           FileStatus fileStatus = client.getFileStatus(new Path(path));
-          HdfsOperation.HdfsOperationType opType = HdfsOperation.HdfsOperationType.FileOp;
+          ValidHdfsOperations.HdfsOperationType opType = ValidHdfsOperations.HdfsOperationType.FileOp;
           if(fileStatus.isDirectory()){
-            opType = HdfsOperation.HdfsOperationType.DirOp;
+            opType = ValidHdfsOperations.HdfsOperationType.DirOp;
           }
           hdfsStats.increment(operation.getOpName(), opType, fileStatus.getLen(), getOperationalDepth(path));
           Progress.incrementSuccesfullOps();
@@ -67,7 +69,7 @@ public class WebHdfsCommunicator implements Callable {
           System.err.println("\n\n\nCan not continue. Unable to connect to HDFS. Aborting ...\n\n\n");
           System.exit(-1);
         }
-        hdfsStats.increment(operation.getOpName(), HdfsOperation.HdfsOperationType.UnDetermined, 0L,
+        hdfsStats.increment(operation.getOpName(), ValidHdfsOperations.HdfsOperationType.UnDetermined, 0L,
             getOperationalDepth(path));
         Progress.incrementFailedOps();
       }

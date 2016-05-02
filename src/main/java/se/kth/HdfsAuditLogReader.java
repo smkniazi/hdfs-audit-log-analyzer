@@ -1,5 +1,8 @@
 package se.kth;
 
+import se.kth.mr.tools.HdfsExecutedOperation;
+import se.kth.mr.tools.ValidHdfsOperations;
+
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,8 +70,8 @@ public class HdfsAuditLogReader {
     String allowedStr = getParameter(line, "[a-zA-Z]+", "allowed");
     boolean allowed = Boolean.parseBoolean(allowedStr);
 
-    if (cmd != null && src != null && HdfsOperation.isValidOperation(cmd) && allowed) {
-      return new HdfsExecutedOperation(HdfsOperation.HdfsOperationName.valueOf(cmd), src, dst, allowed);
+    if (cmd != null && src != null && ValidHdfsOperations.isValidOperation(cmd) && allowed) {
+      return new HdfsExecutedOperation(ValidHdfsOperations.HdfsOperationName.valueOf(cmd), src, dst, allowed);
     }
     return null;
   }

@@ -1,4 +1,4 @@
-package se.kth;
+package se.kth.mr.tools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * Created by salman on 2016-04-13.
  */
-public class HdfsOperation {
+public class ValidHdfsOperations {
 
   private static final Map<String, String> VALID_OPERATION = new HashMap<String, String>();
 

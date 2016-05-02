@@ -1,5 +1,7 @@
 package se.kth;
 
+import se.kth.mr.tools.ValidHdfsOperations;
+
 import java.io.Serializable;
 
 /**
@@ -17,15 +19,15 @@ public class HdfsStats implements Serializable{
     this.hdfsOperationDepthStat = new HdfsOperationDepthStat();
   }
 
-  public synchronized  void increment(HdfsOperation.HdfsOperationName opName, HdfsOperation.HdfsOperationType opType,
-      Long size, int depth){
+  public synchronized  void increment(ValidHdfsOperations.HdfsOperationName opName, ValidHdfsOperations.HdfsOperationType opType,
+                                      Long size, int depth){
     hdfsOperationDepthStat.addOperationDepth(depth);
-    if(opType == HdfsOperation.HdfsOperationType.UnDetermined){
+    if(opType == ValidHdfsOperations.HdfsOperationType.UnDetermined){
       undeterminedOpsStats.increment(opName, false);
     }else {
-      boolean isDirOp = opType == HdfsOperation.HdfsOperationType.DirOp;
+      boolean isDirOp = opType == ValidHdfsOperations.HdfsOperationType.DirOp;
       allStats.increment(opName, isDirOp);
-      if (opType == HdfsOperation.HdfsOperationType.FileOp) {
+      if (opType == ValidHdfsOperations.HdfsOperationType.FileOp) {
         fileStats.increment(opName, size,depth);
       }
     }

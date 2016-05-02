@@ -1,5 +1,7 @@
 package se.kth;
 
+import se.kth.mr.tools.ValidHdfsOperations;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,14 +11,14 @@ import java.util.Map;
  */
 public class HdfsAllOpsStats implements Serializable{
   private final String DELIMETER = ";\t";
-  private Map<HdfsOperation.HdfsOperationName, Stat> stats = new HashMap<HdfsOperation.HdfsOperationName, Stat>();
+  private Map<ValidHdfsOperations.HdfsOperationName, Stat> stats = new HashMap<ValidHdfsOperations.HdfsOperationName, Stat>();
 
-  public void increment(HdfsOperation.HdfsOperationName opName, boolean isDirOp) {
+  public void increment(ValidHdfsOperations.HdfsOperationName opName, boolean isDirOp) {
     Stat stat = getStatObj(opName);
     stat.increment(isDirOp);
   }
 
-  private Stat getStatObj(HdfsOperation.HdfsOperationName opName) {
+  private Stat getStatObj(ValidHdfsOperations.HdfsOperationName opName) {
     Stat stat = stats.get(opName);
     if (stat == null) {
       stat = new Stat();
@@ -32,7 +34,7 @@ public class HdfsAllOpsStats implements Serializable{
         (DELIMETER).append
         ("Total")
         .append("\n");
-    for (HdfsOperation.HdfsOperationName opName : HdfsOperation.getValidOpsSet()) {
+    for (ValidHdfsOperations.HdfsOperationName opName : ValidHdfsOperations.getValidOpsSet()) {
       Stat stat = stats.get(opName);
       if(stat != null){
         sb.append(opName).append(DELIMETER).append(stats.get(opName)).append("\n");

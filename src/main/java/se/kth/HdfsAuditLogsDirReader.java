@@ -1,5 +1,7 @@
 package se.kth;
 
+import se.kth.mr.tools.HdfsExecutedOperation;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
