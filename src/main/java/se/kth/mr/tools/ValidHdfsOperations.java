@@ -32,9 +32,23 @@ public class ValidHdfsOperations {
   }
 
   public enum HdfsOperationType {
-    DirOp,
-    FileOp,
-    UnDetermined
+    DirOp("DirOp"),
+    FileOp("FileOp"),
+    UnDetermined("UnDetermined");
+
+    private final String name;
+
+    private HdfsOperationType(String name) {
+      this.name = name;
+    }
+
+    public boolean equalsName(String otherName) {
+      return (otherName == null) ? false : name.equals(otherName);
+    }
+
+    public String toString() {
+      return name;
+    }
   }
 
   public enum HdfsOperationName {

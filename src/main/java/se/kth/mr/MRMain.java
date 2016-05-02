@@ -29,7 +29,7 @@ public class MRMain extends Configured implements Tool {
     job.setMapperClass(Map.class);
     job.setCombinerClass(Reduce.class);
     job.setReducerClass(Reduce.class);
-    job.setOutputKeyClass(Text.class);
+    job.setOutputKeyClass(HdfsStatKey.class);
     job.setOutputValueClass(IntWritable.class);
     return job.waitForCompletion(true) ? 0 : 1;
   }
