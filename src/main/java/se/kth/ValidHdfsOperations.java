@@ -1,4 +1,4 @@
-package se.kth.mr.tools;
+package se.kth;
 
 import java.util.HashMap;
 import java.util.Map;

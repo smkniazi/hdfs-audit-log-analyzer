@@ -1,8 +1,7 @@
-package se.kth.mr;
+package se.kth;
 
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableUtils;
-import se.kth.mr.tools.ValidHdfsOperations;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -97,6 +96,6 @@ public class HdfsStatKey implements WritableComparable<HdfsStatKey> {
 
   @Override
   public String toString() {
-    return sizeKey +"("+toHumanReadableFileSize(sizeKey)+")"+";"+opType+";"+opName;
+    return sizeKey +"\t"+toHumanReadableFileSize(sizeKey)+"\t"+"\t"+opType+"\t"+opName;
   }
 }

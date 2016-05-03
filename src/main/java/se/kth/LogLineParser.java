@@ -1,4 +1,4 @@
-package se.kth.mr.tools;
+package se.kth;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

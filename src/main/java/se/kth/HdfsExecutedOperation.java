@@ -1,4 +1,4 @@
-package se.kth.mr.tools;
+package se.kth;
 
 /**
  * Created by salman on 4/12/16.
