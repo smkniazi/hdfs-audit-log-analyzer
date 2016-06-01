@@ -25,7 +25,6 @@ public class MRMain extends Configured implements Tool {
   public int run(String[] args) throws Exception {
     Configuration conf = getConf();
 
-    Job job = new Job(conf, "HDFS-Stats");
     for(String arg : args){
       LOG.info("Params "+arg);
     }
@@ -39,6 +38,8 @@ public class MRMain extends Configured implements Tool {
     if(webHdfs!=null){
       LOG.info("WebHdfs is set to "+webHdfs);
     }
+
+    Job job = new Job(conf, "HDFS-Stats");
     job.setJarByClass(this.getClass());
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
