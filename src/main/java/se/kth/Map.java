@@ -11,28 +11,41 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Random;
 
 public class Map extends Mapper<LongWritable, Text, HdfsStatKey, IntWritable> {
   private final static IntWritable one = new IntWritable(1);
 
   static FileSystem client = null;
+  static int sp = 100;
+  static Random rand = new Random(System.currentTimeMillis());
 
   @Override
   protected void setup(Context context) throws IOException, InterruptedException {
     super.setup(context);
     Configuration conf = context.getConfiguration();
-      String webHdfsURI = conf.get("oivWebHdfs");
-      if (webHdfsURI != null) {
-        MRMain.LOG.info("WebHdfs is set to "+webHdfsURI);
-        conf.set("dfs.http.client.retry.policy.enabled", "true");
-        client = (FileSystem) FileSystem.newInstance(URI.create(webHdfsURI), conf);
-      } else {
-        MRMain.LOG.info("WebHdfs is  not set" );
-        client = (FileSystem) FileSystem.newInstance(conf);
-      }
+    String hdfsURI = conf.get("pullStatsFrom");
+    if (hdfsURI != null) {
+      conf.set("dfs.http.client.retry.policy.enabled", "true");
+      client = (FileSystem) FileSystem.newInstance(URI.create(hdfsURI), conf);
+    } else {
+      client = (FileSystem) FileSystem.newInstance(conf);
+    }
+
+    String samplePercent = conf.get("samplePercent");
+    if (samplePercent != null) {
+      sp = Integer.parseInt(samplePercent); // sanity check performed by the main class
+    }
   }
 
   public void map(LongWritable offset, Text lineText, Context context) throws IOException, InterruptedException {
+    if (sp != 100) {
+      int randValue = rand.nextInt(100) + 1; // +1 because we want to exclude 0 and include 100
+      if (randValue > sp) {
+            return;
+      }
+    }
+
     String line = lineText.toString();
     HdfsExecutedOperation operation = LogLineParser.parseHdfsAuditLogLine(line);
     if (operation != null) {
