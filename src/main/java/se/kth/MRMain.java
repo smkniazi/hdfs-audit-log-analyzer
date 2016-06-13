@@ -4,6 +4,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -61,7 +62,7 @@ public class MRMain extends Configured implements Tool {
     job.setCombinerClass(Reduce.class);
     job.setReducerClass(Reduce.class);
     job.setOutputKeyClass(HdfsStatKey.class);
-    job.setOutputValueClass(IntWritable.class);
+    job.setOutputValueClass(LongWritable.class);
     return job.waitForCompletion(true) ? 0 : 1;
   }
 

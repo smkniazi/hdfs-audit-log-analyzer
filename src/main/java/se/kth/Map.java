@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Random;
 
-public class Map extends Mapper<LongWritable, Text, HdfsStatKey, IntWritable> {
-  private final static IntWritable one = new IntWritable(1);
+public class Map extends Mapper<LongWritable, Text, HdfsStatKey, LongWritable> {
+  private final static LongWritable one = new LongWritable(1);
 
   static FileSystem client = null;
   static int sp = 100;
